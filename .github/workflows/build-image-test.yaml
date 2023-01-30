@@ -15,7 +15,7 @@ jobs:
 
       - name: Get changed Dockerfile
         id: changed-files-specific
-        uses: tj-actions/changed-files@v13.1
+        uses: tj-actions/changed-files@2c85495a7bb72f2734cb5181e29b2ee5e08e61f7 # v13.1
         with:
           files: |
             Dockerfile
@@ -24,7 +24,7 @@ jobs:
 
       - name: Build if Dockerfile changed
         if: steps.changed-files-specific.outputs.any_changed == 'true'
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a # v2
         with:
           context: .
           build-args: |
@@ -36,14 +36,14 @@ jobs:
 
       - name: Run structure tests
         if: steps.changed-files-specific.outputs.any_changed == 'true'
-        uses: plexsystems/container-structure-test-action@v0.1.0
+        uses: plexsystems/container-structure-test-action@030c5779133fb7825da7ba9f55e0e6063b386609 # v0.1.0
         with:
           image: ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
           config: .github/.container-structure-test-config.yaml
 
       - name: Dive - check image for waste files
         if: steps.changed-files-specific.outputs.any_changed == 'true'
-        uses: MaxymVlasov/dive-action@v0.1.0
+        uses: MaxymVlasov/dive-action@0035999cae50d4ef657ac94be84f01812aa192a5 # v0.1.0
         with:
           image: ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
           config-file: ${{ github.workspace }}/.github/.dive-ci.yaml

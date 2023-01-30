@@ -15,11 +15,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@dc323e67f16fb5f7663d20ff7941f27f5809e9b6 # v2.6.0
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # v1
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@f211e3e9ded2d9377c8cadc4489a4e38014bc4c9 # v1
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -29,7 +29,7 @@ jobs:
           echo IMAGE_TAG=$([ ${{ github.ref_type }} == 'tag' ] && echo ${{ github.ref_name }} || echo 'latest') >> $GITHUB_ENV
       - name: Build and Push release
         if: github.event_name != 'schedule'
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a # v2
         with:
           context: .
           build-args: |
@@ -41,7 +41,7 @@ jobs:
             ghcr.io/${{ github.repository }}:latest
       - name: Build and Push nightly
         if: github.event_name == 'schedule'
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a # v2
         with:
           context: .
           build-args: |
